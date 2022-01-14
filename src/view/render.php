@@ -1,0 +1,25 @@
+<?php
+
+/* =============================================================================
+ * Naranza Sesto <http://sesto.naranza.com>
+ * Copyright (c) 2009-19 Andrea Davanzo
+ * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * ========================================================================== */
+
+declare(strict_types = 1);
+
+function sesto_view_render(array $views, string $name, array $data = [], bool $strict = true): void
+{
+  $has_view = isset($views[$name]);
+  if (!$has_view && $strict) {
+    throw new exception(sprintf("The view '%s' does not exists", $name));
+  } elseif ($has_view) {
+    $readable = is_file($views[$name]) && is_readable($views[$name]);
+    if (!$readable && $strict) {
+      throw new exception(sprintf("The view '%s' (%s) is not readable", $name, $views[$name]));
+    } elseif ($readable) {
+      include $views[$name];
+    }
+  }
+}
+
