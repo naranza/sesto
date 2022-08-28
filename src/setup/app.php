@@ -28,7 +28,7 @@ function sesto_setup_app(string $dir, string $name, array $dirs = []): string
     foreach ($dirs as $dir) {
       $path = $dir . '/initme.php';
       if (false === strpos($dir, '/')) {
-        $path = 'APP_LIB_DIR' . '/' . $path;
+        $path = APP_LIB_DIR . '/' . $path;
       }
       if (is_file($path) && is_readable($path)) {
         require $path;
