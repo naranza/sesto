@@ -26,7 +26,7 @@ function sesto_setup_sys(string $dir, string $name, array $dirs = []): string
     foreach ($dirs as $dir) {
       $path = $dir . '/initme.php';
       if (false === strpos($dir, '/')) {
-        $path = 'APP_LIB_DIR' . '/' . $path;
+        $path = SYS_BIN_DIR . '/' . $path;
       }
       if (is_file($path) && is_readable($path)) {
         require $path;
