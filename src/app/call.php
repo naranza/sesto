@@ -1,6 +1,6 @@
 <?php
 /* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.com
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
 declare(strict_types=1);
@@ -12,7 +12,11 @@ function sesto_app_call(callable $callable, array $args = [], callable $error_ha
   $exit_code = 0;
   $error = '';
   try {
-    $callable(...$args);
+    if ([] === $args) {
+      $callable([]);
+    } else {
+      $callable(...$args);
+    }
   } catch (sesto_exit $throwable) {
     /* do nothing */
   } catch (throwable $throwable) {

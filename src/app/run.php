@@ -1,39 +1,52 @@
 <?php
-
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-require_once SESTO_DIR . '/util/exit.php';
-require_once SESTO_DIR . '/util/display_errors.php';
-require_once SESTO_DIR . '/util/error_handler.php';
-require_once SESTO_DIR . '/util/is_file_readable.php';
+require_once SESTO_DIR . '/app/call.php';
+require_once SESTO_DIR . '/config/read.php';
+require_once SESTO_DIR . '/app/resource.php';
 
-function sesto_app_run(array $app_args, int &$exit_code = null): ?throwable
+function sesto_app_run(callable $callable, array $args = [], callable $error_handler = null, string &$error = ''): int
 {
-  try {
-    sesto_display_errors('' != ($app_args['env'] ?? ''));
-    set_error_handler('sesto_error_handler');
-    if (!isset($app_args['program'])) {
-      throw new exception('program not defined');
+  $exit_code = 1;
+  /* initial check */
+  if (!defined('SYS_INIT') || false === SYS_INIT) {
+    $error = 'Sesto system not initialized';
+  } elseif (!defined('APP_INIT') || false === APP_INIT) {
+    $error = 'Sesto app not initialized';
+  } else {
+    /* load and parse app.php config */
+    $config = sesto_config_read(APP_CONF_DIR . '/app.php');
+    /* app config */
+    foreach ($config['require'] ?? [] as $path) {
+      require_once $path;
     }
-    if (!sesto_is_file_readable($app_args['program'])) {
-      throw new exception(sprintf('%s path is not readable', $app_args['program']));
+    /* load all the resources */
+    foreach ($config['resource'] ?? [] as $name => $value) {
+      sesto_app_resource($name, $value);
     }
-    require $app_args['program'];
-    $exit_code = 0;
-    $return = null;
-  } catch (sesto_exit $throwable) {
-    $exit_code = 0;
-    $return = $throwable;
-  } catch (throwable $throwable) {
-    $exit_code = 1;
-    $return = $throwable;
-  }
-  return $return;
-}
 
+    /* error handler */
+    if (null === $error_handler) {
+      if ('cli' == php_sapi_name()) {
+        require_once SESTO_DIR . '/app/error_handler_cli.php';
+        $error_handler = 'sesto_app_error_handler_cli';
+      } else {
+        require_once SESTO_DIR . '/app/error_handler_web.php';
+        $error_handler = 'sesto_app_error_handler_web';
+      }
+    }
+    $exit_code = sesto_app_call(
+      $callable,
+      [array_merge(['config' => $config], $args)],
+//      [$config, $args],
+      $error_handler,
+      $error
+    );
+  }
+
+  return $exit_code;
+}
