@@ -1,6 +1,7 @@
 <?php
+
 /* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - sesto.dev
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
 require_once SESTO_DIR . '/memcached/read.php';
@@ -10,6 +11,7 @@ class sesto_memcached_mirror
 {
 
   private $master;
+
   private $mirror = [];
 
   public function __construct(array $master, array $mirrors = [], array $options = [])
@@ -53,6 +55,7 @@ class sesto_memcached_mirror
   public function write($key, $data, $ttl = 0): bool
   {
     $result1 = sesto_memcached_write($this->master, $key, $data, $ttl);
+
     foreach ($this->mirror as $mirror) {
       $result2 = sesto_memcached_write($mirror, $key, $data, $ttl);
     }
