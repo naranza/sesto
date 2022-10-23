@@ -4,10 +4,13 @@
  * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-function sesto_http_post(): bool
+function sesto_http_header_sse(): array
 {
-  return 'GET' == $_SERVER['REQUEST_METHOD'];
+  return [
+    'Content-Type: text/event-stream',
+    'Cache-Control: no-cache',
+    'Connection: keep-alive'
+  ];
 }
-

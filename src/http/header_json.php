@@ -6,11 +6,13 @@
 
 declare(strict_types=1);
 
-function sesto_http_redirect(string $url, int $response_code = 303): void
+function sesto_http_header_json(): array
 {
-  if (!(bool) preg_match('/\S/', $url)) {
-    throw new exception('Empty redirect url');
-  }
-  header("Status: " . $response_code, true);
-  header("Location: " . $url, true, $response_code);
+  return [
+    'Content-Type: application/json',
+    'Expires: on, 01 Jan 1970 00:00:00 GMT',
+    'Last-Modified: ' . gmdate("D, d M Y H:i:s") . " GMT",
+    'Cache-Control: no-store, no-cache, must-revalidate',
+    'Pragma: no-cache'
+  ];
 }
