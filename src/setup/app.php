@@ -1,6 +1,7 @@
 <?php
+
 /* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.com
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
 declare(strict_types=1);
@@ -21,10 +22,11 @@ function sesto_setup_app(string $dir, string $name, array $dirs = []): string
     define('APP_CONF_DIR', $app_dir . '/conf');
     define('APP_ETC_DIR', $app_dir . '/etc');
     define('APP_LIB_DIR', $app_dir . '/lib');
-    define('APP_VAR_DIR', $app_dir . '/var');
+    define('APP_LOG_DIR', $app_dir . '/log');
     define('APP_SHARE_DIR', $app_dir . '/share');
+    define('APP_VAR_DIR', $app_dir . '/var');
+    define('APP_VIEW_DIR', $app_dir . '/view');
     define('APP_WWW_DIR', $app_dir . '/www');
-    define('APP_INIT', true);
     foreach ($dirs as $dir) {
       $path = $dir . '/initme.php';
       if (false === strpos($dir, '/')) {
@@ -35,6 +37,7 @@ function sesto_setup_app(string $dir, string $name, array $dirs = []): string
       }
     }
     $error = '';
+    define('APP_INIT', true);
   }
   return $error;
 }
