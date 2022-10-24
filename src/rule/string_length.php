@@ -1,11 +1,9 @@
 <?php
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-20 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - sesto.dev
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 function sesto_rule_string_length(string $value, int $min = null, int $max = null, string $encoding = null): bool
 {
@@ -35,4 +33,3 @@ function sesto_rule_string_length(string $value, int $min = null, int $max = nul
   }
   return $is_valid;
 }
-

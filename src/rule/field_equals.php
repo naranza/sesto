@@ -5,11 +5,7 @@
 
 declare(strict_types=1);
 
-function sesto_rule_greater_than($value, $min, bool $equal = false): bool
+function sesto_rule_field_equals(string $value, string $field, array $input): bool
 {
-  if ($equal) {
-    return $value >= $min;
-  } else {
-    return $value > $min;
-  }
+  return isset($input[$field]) ? $value === $input[$field] : false;
 }

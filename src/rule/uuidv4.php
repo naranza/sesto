@@ -3,7 +3,7 @@
  * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - sesto.dev
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 function sesto_rule_uuidv4(string $value): bool
 {
