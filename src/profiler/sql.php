@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-function sesto_profiler_sql(string $query = null, float $elapsed = 0.0, array $params = [], string $type = 'query'): null|array
+function sesto_profile_sql(string $query = null, float $elapsed = 0.0, array $params = [], string $type = 'query'): null|array
 {
   static $sqls = [];
   if (null === $query) {
