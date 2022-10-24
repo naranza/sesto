@@ -1,14 +1,10 @@
 <?php
 
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
-
-require_once SESTO_DIR . '/dev/specialchars.php';
+declare(strict_types=1);
 
 function sesto_print_r($expression, bool $return = false): string
 {
@@ -20,13 +16,11 @@ function sesto_print_r($expression, bool $return = false): string
   } elseif (is_int($expression) || is_float($expression) || is_double($expression)) {
     $out = '(' . gettype($expression) . ') ' . $expression;
   } elseif (is_string($expression)) {
-    $out = sprintf(
-      '(string c%d,b%d) %s',
-      mb_strlen($expression),
-      strlen($expression),
-      sesto_specialchars($expression));
+    $out = sprintf('(string c%d,b%d) %s', mb_strlen($expression), strlen($expression), $expression);
+  } elseif (is_array($expression)) {
+    $out = print_r($expression, TRUE);
   } else {
-    $out = sesto_specialchars(print_r($expression, true));
+    $out = '(' . gettype($expression) . ') ' . print_r($expression, TRUE);
   }
   if ($return) {
     return $out;
