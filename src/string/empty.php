@@ -4,10 +4,9 @@
  * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-function sesto_sql_pgsql_execute(string $name, array $values): string
+function sesto_string_empty(string $input): bool
 {
-  return "execute $name(" . implode(', ', $values) . ")";
+  return !(bool) preg_match('/\S/', $input);
 }
-
