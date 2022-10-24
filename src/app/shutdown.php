@@ -6,7 +6,11 @@
 
 declare(strict_types=1);
 
-function sesto_include(string $path): mixed
+function sesto_app_shutdown()
 {
-  return include $path;
+  $e = error_get_last();
+  if ($e !== NULL) {
+    print_r(error_get_last());
+    die;
+  }
 }

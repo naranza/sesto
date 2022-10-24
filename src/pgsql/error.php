@@ -5,13 +5,15 @@
 
 declare(strict_types=1);
 
-function sesto_html_normalise(string $id): string
+function sesto_pgsql_error($conn = null): string
 {
-  if ('[]' == substr($id, -2)) {
-    $id = substr($id, 0, strlen($id) - 2);
+  $error = '';
+  if ($conn instanceof pgsql\connection) {
+    $error = (string) pg_last_error($conn);
+    $pos = strpos($error, "\n");
+    if (false !== $pos) {
+      $error = substr($error, 0, $pos);
+    }
   }
-  $id = rtrim($id, ']');
-  $id = str_replace('][', '-', $id);
-  $id = str_replace('[', '-', $id);
-  return $id;
+  return $error;
 }

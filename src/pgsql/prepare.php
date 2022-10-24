@@ -9,12 +9,12 @@ declare(strict_types=1);
 require_once SESTO_DIR . '/app/env.php';
 require_once SESTO_DIR . '/profile/sql.php';
 
-function sesto_pgsql_query(pgsql\connection $connection, string $query): pgsql\result|false
+function sesto_pgsql_prepare(pgsql\connection $connection, string $stmtname, string $query): pgsql\result|false
 {
   $start = microtime(true);
-  $result = pg_query($connection, $query);
+  $result = pg_prepare($connection, $stmtname, $query);
   if (true === sesto_app_env('sesto_profiler')) {
-    sesto_profile_sql($query, microtime(true) - $start);
+    sesto_profile_sql($query, microtime(true) - $start, [], 'prepare');
   }
   return $result;
 }

@@ -9,10 +9,12 @@
   <body>
     <header>
     <h1><?= $code ?>: <?= $message ?></h1>
-    <?php if ('' !== $debug): ?>
-      <h4><?= $debug ?></h4>
-      <pre><b>Throwable:</b> <?= print_r($throwable, true); ?></pre>
-      <pre><b>args:</b> <?= print_r($args, true); ?></pre>
+    <?php if ($extended_info): ?>
+      <?php if ($extended_data instanceof throwable): ?>
+        <pre><b>Throwable:</b> <?= print_r($extended_data, true); ?></pre>
+      <?php else: ?>
+        <h4><?= $extended_data ?></h4>
+      <?php endif ?>
     <?php endif ?>
     </header>
   </body>

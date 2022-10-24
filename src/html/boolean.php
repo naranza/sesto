@@ -5,6 +5,14 @@
 
 declare(strict_types=1);
 
-const SESTO_DIR = __DIR__;
-const SESTO_VERSION = '2.0';
-const SESTO_CODENAME = 'Caravaggio';
+function sesto_html_boolean(): array
+{
+  return [
+    'autofocus' => true,
+    'checked' => true,
+    'disabled' => true,
+    'multiple' => true,
+    'readonly' => true,
+    'required' => true,
+  ];
+}
