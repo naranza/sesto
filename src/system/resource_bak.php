@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-function sesto_system_registry(string $name = null, $value = null)
+function sesto_system_resource_bak(string $name = null, $value = null): mixed
 {
   /* init the resource */
   static $cache = [];
