@@ -10,6 +10,7 @@ require_once SESTO_DIR . '/app/call.php';
 require_once SESTO_DIR . '/config/read.php';
 require_once SESTO_DIR . '/core/resource.php';
 require_once SESTO_DIR . '/core/env.php';
+require_once SESTO_DIR . '/error/handler.php';
 
 function sesto_app_run(callable $callable, array $args = [], callable $error_handler = null, string &$error = ''): int
 {
@@ -29,12 +30,13 @@ function sesto_app_run(callable $callable, array $args = [], callable $error_han
       require_once $path;
     }
 
-    /* set all the env */
+    /* set all the env values */
     foreach ($config['env'] ?? [] as $name => $value) {
       sesto_env($name, $value);
     }
+
+    /* error_strict */
     if (true === sesto_env('error_strict')) {
-      require_once SESTO_DIR . '/error/handler.php';
       set_error_handler("sesto_error_handler");
     }
     if (true) {

@@ -6,28 +6,14 @@
 
 declare(strict_types=1);
 
+require_once SESTO_DIR . '/http/status_codes.php';
+
 function sesto_app_error_handler_web(throwable $throwable, array $args = []): void
 {
-  $status_codes = [
-    200 => 'OK',
-    400 => 'Bad Request',
-    401 => 'Unauthorized',
-    403 => 'Forbidden',
-    404 => 'Not Found',
-    405 => 'Method Not Allowed',
-    410 => 'Gone',
-    500 => 'Internal Server Error',
-    503 => 'Service Unavailable'
-  ];
-  $code = isset($status_codes[$throwable->getcode()]) ? $throwable->getcode() :  500;
-  $message = $status_codes[$code];
-//  if ('dev' === SYS_ENV) {
-//    $debug = $throwable->getmessage();
-//  } else {
-    $debug = '';
-//    print_r($throwable);
-//  }
+  $extended_info = is_bool($args['error_extended_info'] ?? false) ?: false;
+  $code = isset(sesto_http_status_codes()[$throwable->getcode()]) ? $throwable->getcode() : 500;
+  $message = sesto_http_status_codes()[$code];
   header("Status: " . $code . ' ' . $message);
   header('Content-Type: text/html; charset=utf-8');
-  include 'page.phtml';
+  include 'error_handler_web_page.phtml';
 }
