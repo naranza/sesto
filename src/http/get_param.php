@@ -1,11 +1,12 @@
 <?php
+
 /* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - sesto.dev
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
 declare(strict_types=1);
 
-function sesto_get_param(string $key, $default = null)
+function sesto_get_param(string $key, $default = '')
 {
   $value = $default;
   if (isset($_GET[$key])) {
