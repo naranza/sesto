@@ -12,8 +12,8 @@ function sesto_dump($expression, string $label = '', bool $return = false): stri
 {
   $block_start = '<pre>';
   $block_end = '</pre>';
-  $bold_start = '<strong>';
-  $bold_end = '</strong>';
+  $bold_start = '<b>';
+  $bold_end = '</b>';
   if ('cli' == php_sapi_name()) {
     $block_start = '';
     $block_end = "\n";
