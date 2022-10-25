@@ -14,7 +14,7 @@ function sesto_app_call(callable $callable, array $args = [], callable $error_ha
   $error = '';
   try {
     if ([] === $args) {
-      $callable([]);
+      $callable($args);
     } else {
       $callable(...$args);
     }
