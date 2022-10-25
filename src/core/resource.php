@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-function sesto_app_resource(string $name = null, $value = null): mixed
+function sesto_resource(string $name = null, $value = null): mixed
 {
   /* init */
   static $cache = [];
@@ -33,7 +33,7 @@ function sesto_app_resource(string $name = null, $value = null): mixed
         /* auto init the resource */
         if ('&' == $cache[$name][0]) {
           $name = substr($cache[$name], 1);
-          $resource = sesto_app_resource($name);
+          $resource = sesto_resource($name);
         } else {
           $path = $cache[$name] . ('php' != pathinfo($cache[$name], PATHINFO_EXTENSION) ? '.php' : '');
           if (is_file($path) && is_readable($path)) {

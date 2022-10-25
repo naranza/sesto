@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 require_once SESTO_DIR . '/app/call.php';
 require_once SESTO_DIR . '/config/read.php';
-require_once SESTO_DIR . '/app/resource.php';
+require_once SESTO_DIR . '/core/resource.php';
 require_once SESTO_DIR . '/core/env.php';
 
 function sesto_app_run(callable $callable, array $args = [], callable $error_handler = null, string &$error = ''): int
@@ -44,7 +44,7 @@ function sesto_app_run(callable $callable, array $args = [], callable $error_han
 
     /* load all the resources */
     foreach ($config['resource'] ?? [] as $name => $value) {
-      sesto_app_resource($name, $value);
+      sesto_resource($name, $value);
     }
 
     /* error handler */
