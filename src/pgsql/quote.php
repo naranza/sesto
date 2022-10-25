@@ -1,14 +1,10 @@
 <?php
 
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
-
-require_once SESTO_DIR . '/type/check.php';
+declare(strict_types=1);
 
 function sesto_pgsql_quote($link, $value)
 {
@@ -18,14 +14,5 @@ function sesto_pgsql_quote($link, $value)
   if (is_bool($value)) {
     return "'" . ($value ? 't' : 'f') . "'";
   }
-  $error = sesto_type_check($value, 'string');
-  if ('' !== $error) {
-    throw new exception($error, 1000);
-  }
-  $error = sesto_type_check($link, 'pgsql link');
-  if ('' !== $error) {
-    throw new exception($error, 1000);
-  }
   return "'" . pg_escape_string($link, $value) . "'";
 }
-
