@@ -1,17 +1,15 @@
 <?php
 
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once SESTO_DIR . '/html/element.php';
 require_once SESTO_DIR . '/html/build.php';
 
-function sesto_html_select(array $attribs = [], $value, array $options = [])
+function sesto_html_select($value, array $attribs = [], array $options = [])
 {
   $content = "\n";
   foreach ($options as $field_value => $field_label) {
@@ -23,4 +21,3 @@ function sesto_html_select(array $attribs = [], $value, array $options = [])
   }
   return sesto_html_build(sesto_html_element('select', $attribs, $content));
 }
-

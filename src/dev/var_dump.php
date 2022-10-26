@@ -1,12 +1,10 @@
 <?php
 
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 function sesto_var_dump($var, string $label = '', bool $return = false): string
 {
@@ -22,7 +20,7 @@ function sesto_var_dump($var, string $label = '', bool $return = false): string
   }
   $out = $block_start;
   $bt = debug_backtrace();
-  $idx = $bt[0]['function'] == 'sesto_dump' ? 0 : 1;
+  //$idx = $bt[0]['function'] == 'sesto_dump' ? 0 : 1;
   $idx = 1;
   $out .= '[' . pathinfo($bt[$idx]['file'], PATHINFO_FILENAME);
   $out .= ':' . $bt[$idx]['line'] . ']';
@@ -40,4 +38,3 @@ function sesto_var_dump($var, string $label = '', bool $return = false): string
   print $out;
   return '';
 }
-

@@ -1,25 +1,20 @@
 <?php
 
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-require_once SESTO_DIR . '/type/check.php';
+require_once SESTO_DIR . '/core/env.php';
+require_once SESTO_DIR . '/profile/sql.php';
 
-function sesto_pgsql_query($link, string $query)
+function sesto_pgsql_query(pgsql\connection $connection, string $query): pgsql\result|false
 {
-  $error = sesto_type_check($link, 'pgsql link');
-  if ('' !== $error) {
-    throw new exception($error, 1000);
-  }
-  $result = @pg_query($link, $query);
-  if (false === $result) {
-    throw new exception((string) pg_last_error($link), 1002);
+  $start = microtime(true);
+  $result = pg_query($connection, $query);
+  if (true === sesto_env('sesto_profiler')) {
+    sesto_profile_sql($query, microtime(true) - $start);
   }
   return $result;
 }
-

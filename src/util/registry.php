@@ -1,45 +1,48 @@
 <?php
-
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - sesto.dev
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-final class sesto_registry
+function sesto_system_registry(string $name = null, $value = null)
 {
-
-  private static $instance = null;
-  public $data;
-
-  public static function getme(): sesto_registry
-  {
-    if (null === self::$instance) {
-      self::$instance = new self();
+  /* init the resource */
+  static $cache = [];
+  $error = '';
+  if (null === $name && null === $value) {
+    /* return all cache */
+    return [$cache, $error];
+  }
+  if (null !== $name && null !== $value) {
+    /* set the resource */
+    $cache[$name] = $value;
+  } elseif (null !== $name && null === $value) {
+    /* get the resource */
+    if (!isset($cache[$name])) {
+      $value = null;
+      $error = sprintf("Resource '%s' not found", $name);
+    } else {
+      if (is_string($cache[$name])) {
+        /* init the resource */
+        if ('&' === $cache[$name][0]) {
+          /* it is a reference */
+          $referenced = substr($cache[$name], 1);
+          list($value, $error) = sesto_system_resource($referenced);
+          if ('' === $error) {
+            $cache[$name] = &$cache[$referenced];
+          }
+        } else {
+          $path = $cache[$name] . '.php';
+          if (is_file($path) && is_readable($path)) {
+            $cache[$name] = include $path;
+          } else {
+            $error = sprintf("'%s' not a file or not readable", $path);
+          }
+        }
+      }
+      $value = $cache[$name];
     }
-    return self::$instance;
   }
-
-  private function __construct()
-  {
-    $this->data = [];
-  }
-
-  private function __clone()
-  {
-
-  }
-
-  final public function __set($name, $value)
-  {
-    throw new exception($name . ' property not defined');
-  }
-
-  final public function __get($name)
-  {
-    throw new exception($name . ' property not defined');
-  }
-
+  return [$value, $error];
 }

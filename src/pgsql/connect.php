@@ -1,24 +1,23 @@
 <?php
-
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - sesto.dev
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-require_once SESTO_DIR . '/util/error_handler.php';
+require_once SESTO_DIR . '/core/error_handler.php';
 
 function sesto_pgsql_connect(
   string $hostname,
   string $username,
   string $password,
   string $database,
-  array $options = [])
+  array $options = [],
+  string &$error = ''): pgsql\connection|false
 {
-  $connection = null;
+  $error = '';
   $port = $options['port'] ?? '';
+  /* generate conncetion string */
   $string = 'host=' . $hostname ?? '';
   if ('' != $port) {
     $string .= ' port=' . $port;
@@ -29,14 +28,16 @@ function sesto_pgsql_connect(
   if (isset($options['client_encoding'])) {
     $string .= " options='--client_encoding={$options['client_encoding']}'";
   }
+  /* connect */
   try {
     set_error_handler('sesto_error_handler');
-    $conn = @pg_connect($string);
+    $connection = pg_connect($string);
   } catch (exception $ex) {
-    throw new exception($ex->getmessage(), 1001);
+    $error = $ex->getmessage();
+    $connection = false;
   } finally {
     restore_error_handler();
   }
-  return $conn;
+  return $connection;
 }
 

@@ -1,0 +1,8 @@
+{
+  "name": "sesto/sesto",
+  "description": "PHP development library",
+  "license": "MPL-2.0",
+  "require": {
+    "php": ">=8.1"
+  }
+}

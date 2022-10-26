@@ -1,14 +1,15 @@
 <?php
 
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 const SESTO_DIR = __DIR__;
-const SESTO_RELEASE = '3.0.0';
-const SESTO_CODENAME = 'Tintoretto';
+const SESTO_VERSION = '2022.1';
+const SESTO_CODENAME = 'White Ash';
 
+require_once SESTO_DIR . '/core/require.php';
+
+sesto_path('sesto', SESTO_DIR);

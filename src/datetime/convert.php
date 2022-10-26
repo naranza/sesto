@@ -1,9 +1,10 @@
 <?php
+
 /* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - sesto.dev
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once SESTO_DIR . '/datetime/from_format.php';
 

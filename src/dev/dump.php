@@ -1,12 +1,10 @@
 <?php
 
 /* =============================================================================
- * Naranza Sesto <http://sesto.naranza.com>
- * Copyright (c) 2009-19 Andrea Davanzo
- * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once SESTO_DIR . '/dev/print_r.php';
 
@@ -14,8 +12,8 @@ function sesto_dump($expression, string $label = '', bool $return = false): stri
 {
   $block_start = '<pre>';
   $block_end = '</pre>';
-  $bold_start = '<strong>';
-  $bold_end = '</strong>';
+  $bold_start = '<b>';
+  $bold_end = '</b>';
   if ('cli' == php_sapi_name()) {
     $block_start = '';
     $block_end = "\n";
@@ -23,8 +21,12 @@ function sesto_dump($expression, string $label = '', bool $return = false): stri
     $bold_end = '';
   }
   $out = $block_start;
-  $bt = debug_backtrace();
-  $idx = 0;
+  $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+  if (isset($bt[1]) && isset($bt[1]['function']) && 'sesto_d' === $bt[1]['function']) {
+    $idx = 1;
+  } else {
+    $idx = 0;
+  }
   $out .= '[' . pathinfo($bt[$idx]['file'], PATHINFO_FILENAME);
   $out .= ':' . $bt[$idx]['line'] . ']';
   if ('' != $label) {
@@ -39,3 +41,7 @@ function sesto_dump($expression, string $label = '', bool $return = false): stri
   return '';
 }
 
+function sesto_d($expression, string $label = '', bool $return = false): string
+{
+  return sesto_dump($expression, $label, $return);
+}
