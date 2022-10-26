@@ -7,7 +7,7 @@
 declare(strict_types=1);
 
 require_once SESTO_DIR . '/app/call.php';
-require_once SESTO_DIR . '/config/read.php';
+require_once SESTO_DIR . '/core/config_read.php';
 require_once SESTO_DIR . '/core/resource.php';
 require_once SESTO_DIR . '/core/env.php';
 require_once SESTO_DIR . '/error/handler.php';
