@@ -5,7 +5,7 @@
 
 declare(strict_types=1);
 
-require_once SESTO_DIR . '/error/handler.php';
+require_once SESTO_DIR . '/core/error_handler.php';
 
 function sesto_pgsql_connect(
   string $hostname,

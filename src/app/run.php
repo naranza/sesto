@@ -10,7 +10,7 @@ require_once SESTO_DIR . '/app/call.php';
 require_once SESTO_DIR . '/core/config_read.php';
 require_once SESTO_DIR . '/core/resource.php';
 require_once SESTO_DIR . '/core/env.php';
-require_once SESTO_DIR . '/error/handler.php';
+require_once SESTO_DIR . '/core/error_handler.php';
 
 function sesto_app_run(callable $callable, array $args = [], callable $error_handler = null, string &$error = ''): int
 {
