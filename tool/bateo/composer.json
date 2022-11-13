@@ -1,0 +1,8 @@
+{
+  "name": "bateo/bateo",
+  "description": "PHP testcase processor",
+  "license": "GPL-3.0-only",
+  "require": {
+    "php": ">=7.2"
+  }
+}
