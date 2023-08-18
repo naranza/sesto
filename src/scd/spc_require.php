@@ -9,7 +9,7 @@ declare(strict_types=1);
 function sesto_spc_require(array $spc): void
 {
   if (isset($spc['require'])) {
-    if (!sesto_is_file_readable($spc['require'])) {
+    if (!is_file($spc['require']) || !is_readable($spc['require'])()) {
       throw new exception($spc['require'] . ' is not readable');
     }
     require_once $spc['require'];

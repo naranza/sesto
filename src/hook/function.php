@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-function sesto_hook_function(array $hooks, string $name, ...$args)
+function sesto_hook_function(array $hooks, string $name, ...$args): mixed
 {
   $result = null;
   $calls = $hooks[$name] ?? [];

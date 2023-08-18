@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-function sesto_hook_filter(array $hooks, string $name, $value)
+function sesto_hook_filter(array $hooks, string $name, $value): mixed
 {
   $filtered = $value;
   $calls = $hooks[$name] ?? [];

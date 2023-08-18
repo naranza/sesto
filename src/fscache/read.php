@@ -4,14 +4,9 @@
  * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-function sesto_fscache_read(string $path): ?string
+function sesto_fscache_read(string $path): string|false
 {
-  $result = file_get_contents($path);
-  if (false === $result) {
-    $result = null;
-  }
-  return $result;
+  return file_get_contents($path);
 }
-
