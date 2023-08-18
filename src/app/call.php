@@ -8,15 +8,15 @@ declare(strict_types=1);
 
 require_once SESTO_DIR . '/core/exit.php';
 
-function sesto_app_call(callable $callable, array $args = [], callable $error_handler = null, string &$error = ''): int
+function sesto_app_call(callable $callback, array $args = [], callable $error_handler = null, string &$error = ''): int
 {
   $exit_code = 0;
   $error = '';
   try {
     if ([] === $args) {
-      $callable($args);
+      $callback($args);
     } else {
-      $callable(...$args);
+      $callback(...$args);
     }
   } catch (sesto_exit $throwable) {
     /* do nothing */
