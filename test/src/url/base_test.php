@@ -23,7 +23,7 @@ class bateo_testcase
     $_SERVER['DOCUMENT_ROOT'] = '/var/www/';
     $t->wie = '/';
     $t->wig = sesto_url_base();
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_test2(test $t)
@@ -33,7 +33,7 @@ class bateo_testcase
     $_SERVER['DOCUMENT_ROOT'] = '/var/www';
     $t->wie = '/';
     $t->wig = sesto_url_base();
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_test3(test $t)
@@ -42,7 +42,7 @@ class bateo_testcase
     $_SERVER['DOCUMENT_ROOT'] = '/var/www/';
     $t->wie = '/test';
     $t->wig = sesto_url_base();
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_test4(test $t)
@@ -51,6 +51,6 @@ class bateo_testcase
     $_SERVER['DOCUMENT_ROOT'] = '/var/www';
     $t->wie = '/test';
     $t->wig = sesto_url_base();
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 }

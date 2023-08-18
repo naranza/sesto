@@ -20,27 +20,27 @@ class bateo_testcase
   {
     $t->wie = '/';
     $t->wig = sesto_url_relative('/', '/');
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_test_root_with_subdir(test $t)
   {
     $t->wie = '/test/';
     $t->wig = sesto_url_relative('/test/', '/');
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_test_basedir(test $t)
   {
     $t->wie = '/';
     $t->wig = sesto_url_relative('/', '/admin');
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_test_basedir_with_subdir(test $t)
   {
     $t->wie = '/test/';
     $t->wig = sesto_url_relative('/test/', '/admin');
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 }

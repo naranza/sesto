@@ -22,7 +22,7 @@ class bateo_testcase
     $_SERVER['QUERY_STRING'] = '';
     $t->wie = '/';
     $t->wig = sesto_url_path();
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_test_root_with_query(test $t)
@@ -31,6 +31,6 @@ class bateo_testcase
     $_SERVER['QUERY_STRING'] = 'id=1';
     $t->wie = '/';
     $t->wig = sesto_url_path();
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 }

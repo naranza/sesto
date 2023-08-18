@@ -21,14 +21,14 @@ class bateo_testcase
     $t->wie = ['test' => '123'];
     sesto_registry('test', '123');
     $t->wig = sesto_registry();
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_get_not_exists(test $t)
   {
     $t->wie = null;
     $t->wig = sesto_registry(uniqid());
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_get(test $t)
@@ -36,7 +36,7 @@ class bateo_testcase
     sesto_registry('test2', '456');
     $t->wie = '456';
     $t->wig = sesto_registry('test2');
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_delete(test $t)
@@ -44,6 +44,6 @@ class bateo_testcase
     sesto_registry('test', null);
     $t->wie = ['test2' => '456'];
     $t->wig = sesto_registry();
-    $t->pass_if($t->wie == $t->wig);
+    $t->pass_if($t->wie === $t->wig);
   }
 }
