@@ -10,6 +10,7 @@ require_once BATEO_DIR . '/test.php';
 require_once BATEO_DIR . '/testcase_get_issues.php';
 require_once BATEO_DIR . '/stats_test.php';
 require_once BATEO_DIR . '/stats_test_update.php';
+require_once BATEO_DIR . '/testcase_interface.php';
 
 function bateo_testcase_run(string $path): array
 {
@@ -29,20 +30,23 @@ function bateo_testcase_run(string $path): array
     $testcase = null;
   }
 
-  if ($testcase instanceof bateo_testcase_interface) {
+  if (is_object($testcase)) {
+    $testcase_methods = get_class_methods($testcase);
     /* testcase setup */
-    if (count($result['errors']) == 0) {
-      $tests = preg_grep('/^t_/', get_class_methods($testcase));
+    if (empty($result['errors'])) {
+      $tests = preg_grep('/^t_/', $testcase_methods);
       $result['test_stats']['found'] = count($tests);
-      try {
-        $testcase->setup();
-      } catch (throwable $throwable) {
-        $result['errors']['setup'] = $throwable->getmessage();
+      if (in_array('setup', $testcase_methods)) {
+        try {
+          $testcase->setup();
+        } catch (throwable $throwable) {
+          $result['errors']['setup'] = $throwable->getmessage();
+        }
       }
     }
 
     /* call testcase tests */
-    if (count($result['errors']) == 0) {
+    if (empty($result['errors'])) {
       foreach ($tests as $testname) {
         $test = new bateo_test($testname);
         if (!$result['halted']) {
@@ -72,10 +76,12 @@ function bateo_testcase_run(string $path): array
     }
 
     /* call testcase teardown() */
-    try {
-      $testcase->teardown();
-    } catch (throwable $throwable) {
-      $result['errors']['teardown'] = $throwable->getmessage();
+    if (in_array('teardown', $testcase_methods)) {
+      try {
+        $testcase->teardown();
+      } catch (throwable $throwable) {
+        $result['errors']['teardown'] = $throwable->getmessage();
+      }
     }
   }
   $result['issues'] = bateo_testcase_get_issues($result);

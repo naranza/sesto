@@ -6,7 +6,7 @@
 declare(strict_types = 1);
 
 const BATEO_DIR = __DIR__;
-const BATEO_VERSION = '2021.10.004';
+const BATEO_VERSION = '2023.3';
 const BATEO_CODENAME = 'Monteverdi';
 const BATEO_TEST_PASS = 0;
 const BATEO_TEST_FAIL = 1;

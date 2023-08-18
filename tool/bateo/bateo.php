@@ -25,39 +25,38 @@ include BATEO_DIR . '/dump.php';
 
 try {
   /* parent */
-  $commands = bateo_get_commands($argv);
-  bateo_display_errors($commands['error_reporting']);
-  set_error_handler('bateo_error_handler');
-  $started = microtime(true);
+  list($commands, $bootstrap_error) = bateo_get_commands($argv);
   $shutdown_path = sys_get_temp_dir() . '/bateo-shutdown.list';
-  $config = bateo_load_config($commands['config_path']);
+  $started = microtime(true);
+  $process_stats = [];
+  if ('' === $bootstrap_error) {
+    bateo_display_errors($commands['error_reporting']);
+    set_error_handler('bateo_error_handler');
+    $config = bateo_load_config($commands['config_path']);
 
-  if (file_exists($shutdown_path)) {
-    unlink($shutdown_path);
-  }
-  $datalist = bateo_find_testcases($commands['destination']);
-  $ipc_handler = new bateo_ipchandler_file();
-  /* boostrap file */
-  if ('' !== $commands['bootstrap_path']) {
-    if (bateo_is_readable($commands['bootstrap_path'])) {
-      require $commands['bootstrap_path'];
-    } else {
-      throw new exception(sprintf('%s is not readable', $commands['bootstrap_path']));
+    if (file_exists($shutdown_path)) {
+      unlink($shutdown_path);
     }
+    $datalist = bateo_find_testcases($commands['test_path']);
+    $ipc_handler = new bateo_ipchandler_file();
+    /* boostrap file */
+    if ('' !== $commands['bootstrap_path']) {
+      if (bateo_is_readable($commands['bootstrap_path'])) {
+        require $commands['bootstrap_path'];
+      } else {
+        throw new exception(sprintf('%s is not readable', $commands['bootstrap_path']));
+      }
+    }
+    /* handle shutdown */
+    if ($commands['handle_shutdown']) {
+      register_shutdown_function('bateo_last_error', $shutdown_path);
+    }
+    /* process testcases */
+    $process_stats = bateo_process_testcases($datalist, $ipc_handler);
+    $bootstrap_error = '';
   }
-  /* handle shutdown */
-  if ($commands['handle_shutdown']) {
-    register_shutdown_function('bateo_last_error', $shutdown_path);
-  }
-  /* process testcases */
-  $process_stats = bateo_process_testcases($datalist, $ipc_handler);
-  $bootstrap_error = '';
 } catch (throwable $exception) {
   $bootstrap_error = sprintf("Bootstrap error: %s\n", bateo_print_th($exception, true));
-  $process_stats = [
-    'process_stats' => bateo_stats_process(),
-    'test_stats' => bateo_stats_test()
-  ];
 }
 echo "\n";
 $shutdown_errors = 0;
@@ -66,7 +65,10 @@ if ($commands['handle_shutdown']) {
     $shutdown_errors = (int) exec('wc -l < ' . $shutdown_path);
   }
 }
-bateo_process_stats_print($process_stats);
+/* Process summary */
+if (!empty($process_stats)) {
+  bateo_process_stats_print($process_stats);
+}
 if ('' !== $bootstrap_error) {
   echo "\n\n";
   echo "== Boostrap error\n";

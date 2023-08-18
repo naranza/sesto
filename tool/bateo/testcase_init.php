@@ -1,13 +1,12 @@
 <?php
+
 /* =============================================================================
  * Naranza Bateo, Copyright (c) Andrea Davanzo, License GNU GPL v3.0, bateo.dev
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-require_once BATEO_DIR . '/testcase_interface.php';
-
-function bateo_testcase_init(string $path): bateo_testcase_interface
+function bateo_testcase_init(string $path): object
 {
   if (!is_file($path) && !is_readable($path)) {
     throw new exception(sprintf('The testcase path %s is not readable', $path));
@@ -19,7 +18,7 @@ function bateo_testcase_init(string $path): bateo_testcase_interface
     $testcase = new $class();
   } else {
     if (!class_exists('bateo_testcase')) {
-      throw new exception(sprintf('$class not defined on %s', $path));
+      throw new exception(sprintf('bateo_testcase or $class not found on %s', $path));
     }
     $testcase = new bateo_testcase();
   }

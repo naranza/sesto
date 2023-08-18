@@ -91,25 +91,4 @@ final class bateo_test
     $this->set_result(...$args);
   }
 
-  public function passed(string $message)
-  {
-    $this->pass(...func_get_args());
-  }
-
-  public function failed(string $message)
-  {
-    $this->fail(...func_get_args());
-  }
-
-  public function passed_if(bool $condition, string $message)
-  {
-    call_user_func_array([$this, 'pass_if'], func_get_args());
-    $this->pass_if(...func_get_args());
-  }
-
-  public function failed_if(bool $condition, string $message, bool $halt = false)
-  {
-    $this->fail_if(...func_get_args());
-  }
-
 }
