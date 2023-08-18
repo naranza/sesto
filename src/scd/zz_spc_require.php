@@ -6,16 +6,12 @@
 
 declare(strict_types=1);
 
-function sesto_string_json_pp(string $json): string
+function sesto_spc_require(array $spc): void
 {
-  $data = json_decode($json);
-  if (null !== $data) {
-    $out = json_encode($data, JSON_PRETTY_PRINT);
-    if (false === $out) {
-      $out = '';
+  if (isset($spc['require'])) {
+    if (!is_file($spc['require']) || !is_readable($spc['require'])()) {
+      throw new exception($spc['require'] . ' is not readable');
     }
-  } else {
-    $out = '';
+    require_once $spc['require'];
   }
-  return $out;
 }

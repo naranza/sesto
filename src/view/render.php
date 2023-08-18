@@ -12,11 +12,16 @@ function sesto_view_render(array $views, string $name, array $data = [], bool $s
   if (!$has_view && $strict) {
     throw new exception(sprintf("The view '%s' does not exists", $name));
   } elseif ($has_view) {
-    $readable = is_file($views[$name]) && is_readable($views[$name]);
-    if (!$readable && $strict) {
-      throw new exception(sprintf("The view '%s' (%s) is not readable", $name, $views[$name]));
-    } elseif ($readable) {
-      include $views[$name];
+    if ('&' == $views[$name][0]) {
+      $name = substr($views[$name], 1);
+      sesto_view_render($views, $name, $data, $strict);
+    } else {
+      $readable = is_file($views[$name]) && is_readable($views[$name]);
+      if (!$readable && $strict) {
+        throw new exception(sprintf("The view '%s' (%s) is not readable", $name, $views[$name]));
+      } elseif ($readable) {
+        include $views[$name];
+      }
     }
   }
 }

@@ -15,7 +15,7 @@ function sesto_html_select($value, array $attribs = [], array $options = [])
   foreach ($options as $field_value => $field_label) {
     $option_attribs = ['value' => $field_value];
     if ($field_value === $value) {
-      $option_attribs[] = 'selected';
+      $option_attribs['selected'] = 'selected';
     }
     $content .= "\t" . sesto_html_build(sesto_html_element('option', $option_attribs, $field_label));
   }

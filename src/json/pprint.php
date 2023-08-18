@@ -6,7 +6,16 @@
 
 declare(strict_types=1);
 
-class sesto_exit extends exception
+function sesto_json_pprint(string $json): string
 {
-
+  $data = json_decode($json);
+  if (null !== $data) {
+    $out = json_encode($data, JSON_PRETTY_PRINT);
+    if (false === $out) {
+      $out = '';
+    }
+  } else {
+    $out = '';
+  }
+  return $out;
 }

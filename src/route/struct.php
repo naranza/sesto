@@ -14,6 +14,8 @@ function sesto_route_struct(): array
     'url_path' => '',
     'url_relative' => '',
     'dirname' => '',
-    'filename' => ''
+    'filename' => '',
+    'basename' => '',
+    'extension' => ''
   ];
 }

@@ -1,11 +1,10 @@
 <?php
 
 /* =============================================================================
- * Naranza Sesto - Copyright (c) 2009-20 Andrea Davanzo - www.naranza.com
- * License MPL v2.0. See the LICENSE file distributed with this source code.
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 function sesto_timezone_us(string $state = null): string
 {
@@ -48,4 +47,3 @@ function sesto_timezone_us(string $state = null): string
   ];
   return (null === $state) ? $timezones : ($timezones[strtoupper($state)] ?? '');
 }
-

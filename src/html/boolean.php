@@ -15,5 +15,6 @@ function sesto_html_boolean(): array
     'multiple' => true,
     'readonly' => true,
     'required' => true,
+    'selected' => true
   ];
 }

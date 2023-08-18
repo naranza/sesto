@@ -9,7 +9,7 @@ declare(strict_types=1);
 class sesto_xml_simple extends SimpleXMLElement
 {
 
-  public function add_cdata(string $cdata_text)
+  public function add_cdata(string $cdata_text): void
   {
     $node = dom_import_simplexml($this);
     $no = $node->ownerDocument;
