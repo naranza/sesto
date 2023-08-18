@@ -1,0 +1,34 @@
+<?php
+
+/* =============================================================================
+ * Naranza Sesto <http://sesto.naranza.com>
+ * Copyright (c) 2009-19 Andrea Davanzo
+ * License BSD 3-clause. See the LICENSE file distributed with this source code.
+ * ========================================================================== */
+
+declare(strict_types = 1);
+
+use bateo_test as test;
+
+class bateo_testcase implements bateo_testcase_interface
+{
+
+  public function setup()
+  {
+    require_once SESTO_DIR . '/chain/call.php';
+  }
+
+  public function teardown()
+  {
+
+  }
+
+  public function t_success(test $t)
+  {
+    $t->wie = '';
+    $t->wig = sesto_type_check('this is a test', 'string');
+    $t->pass_if($t->wie === $t->wig);
+  }
+
+}
+

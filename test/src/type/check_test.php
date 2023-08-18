@@ -13,22 +13,27 @@ class bateo_testcase
 
   public function setup()
   {
-    require_once SESTO_DIR . '/route/struct.php';
+    require_once SESTO_DIR . '/type/check.php';
   }
 
-  public function t_struct(test $t)
+  public function teardown()
   {
-    $t->wie = [
-      'id' => '',
-      'url_base' => '',
-      'url_path' => '',
-      'url_relative' => '',
-      'dirname' => '',
-      'filename' => '',
-      'basename' => '',
-      'extension' => ''
-    ];
-    $t->wig = sesto_route_struct();
+
+  }
+
+  public function t_success(test $t)
+  {
+    $t->wie = '';
+    $t->wig = sesto_type_check('this is a test', 'string');
     $t->pass_if($t->wie === $t->wig);
   }
+
+  public function t_failed(test $t)
+  {
+    $t->wie = "Invalid type: 'string' expected 'integer' got";
+    $t->wig = sesto_type_check(1234, 'string');
+    $t->pass_if($t->wie === $t->wig);
+  }
+
 }
+

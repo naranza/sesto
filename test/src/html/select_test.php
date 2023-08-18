@@ -13,22 +13,29 @@ class bateo_testcase
 
   public function setup()
   {
-    require_once SESTO_DIR . '/route/struct.php';
+    require_once SESTO_DIR . '/html/select.php';
   }
 
-  public function t_struct(test $t)
+  public function teardown()
   {
-    $t->wie = [
-      'id' => '',
-      'url_base' => '',
-      'url_path' => '',
-      'url_relative' => '',
-      'dirname' => '',
-      'filename' => '',
-      'basename' => '',
-      'extension' => ''
+
+  }
+
+  public function t_execute(test $t)
+  {
+    $t->wie = 'deallocate stmt1';
+    $attribs = [
+      'name' => 'record[color]',
+      'id' => 'record[color]',
+      'class' => 'toco-123'
     ];
-    $t->wig = sesto_route_struct();
+    $options = [
+      '1' => 'Blue',
+      '2' => 'Orange'
+    ];
+    $t->wig = sesto_html_select($attribs, '1', $options);
     $t->pass_if($t->wie === $t->wig);
   }
+
 }
+

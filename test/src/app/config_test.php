@@ -13,22 +13,23 @@ class bateo_testcase
 
   public function setup()
   {
-    require_once SESTO_DIR . '/route/struct.php';
+    require_once SESTO_DIR . '/app/config.php';
+
   }
 
-  public function t_struct(test $t)
+  public function teardown()
+  {
+
+  }
+
+  public function t_test1(test $t)
   {
     $t->wie = [
-      'id' => '',
-      'url_base' => '',
-      'url_path' => '',
-      'url_relative' => '',
-      'dirname' => '',
-      'filename' => '',
-      'basename' => '',
-      'extension' => ''
-    ];
-    $t->wig = sesto_route_struct();
+      'app_root_dir' => '',
+      'app_env' => ''];
+    $t->wig = sesto_app_config();
     $t->pass_if($t->wie === $t->wig);
   }
+
 }
+

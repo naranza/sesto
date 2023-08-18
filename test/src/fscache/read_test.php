@@ -13,22 +13,29 @@ class bateo_testcase
 
   public function setup()
   {
-    require_once SESTO_DIR . '/route/struct.php';
+    require_once SESTO_DIR . '/fscache/read.php';
   }
 
-  public function t_struct(test $t)
+  public function teardown()
   {
-    $t->wie = [
-      'id' => '',
-      'url_base' => '',
-      'url_path' => '',
-      'url_relative' => '',
-      'dirname' => '',
-      'filename' => '',
-      'basename' => '',
-      'extension' => ''
-    ];
-    $t->wig = sesto_route_struct();
+
+  }
+
+  public function t_does_not_exists(test $t)
+  {
+    $t->wie = null;
+    $t->wig = sesto_fscache_read(uniqid());
+    error_clear_last();
     $t->pass_if($t->wie === $t->wig);
   }
+
+  public function t_exists(test $t)
+  {
+    $t->wie = 'naranza';
+    $t->wig = trim(sesto_fscache_read(__DIR__ . '/cache_file.txt'));
+    $t->pass_if($t->wie === $t->wig);
+  }
+
+
 }
+
