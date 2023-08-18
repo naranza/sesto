@@ -1,11 +1,12 @@
 <?php
+
 /* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - sesto.dev
+ * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
 declare(strict_types=1);
 
-function sesto_is_file_readable(string $path): bool
+class sesto_exit extends exception
 {
-  return is_file($path) && is_readable($path);
+
 }
