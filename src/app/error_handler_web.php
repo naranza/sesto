@@ -13,7 +13,9 @@ function sesto_app_error_handler_web(throwable $throwable, array $args = []): vo
   $extended_info = is_bool($args['error_extended_info'] ?? false) ?: false;
   $code = isset(sesto_http_status_codes()[$throwable->getcode()]) ? $throwable->getcode() : 500;
   $message = sesto_http_status_codes()[$code];
-  header("Status: " . $code . ' ' . $message);
-  header('Content-Type: text/html; charset=utf-8');
+  if (!headers_sent()) {
+    header("Status: " . $code . ' ' . $message);
+    header('Content-Type: text/html; charset=utf-8');
+  }
   include 'error_handler_web_page.phtml';
 }
