@@ -9,7 +9,7 @@ declare(strict_types=1);
 require_once SESTO_DIR . '/html/void.php';
 require_once SESTO_DIR . '/html/attribs.php';
 
-function sesto_html_build( $element): string
+function sesto_html_build(array $element): string
 {
   $html = '';
   if (isset($element['tag'])) {

@@ -7,9 +7,9 @@
 declare(strict_types=1);
 
 require_once SESTO_DIR . '/route/struct.php';
-require_once SESTO_DIR . '/url/base.php';
-require_once SESTO_DIR . '/url/path.php';
-require_once SESTO_DIR . '/url/relative.php';
+require_once SESTO_DIR . '/route/base.php';
+require_once SESTO_DIR . '/route/path.php';
+require_once SESTO_DIR . '/route/relative.php';
 
 function sesto_route_resolve(string $url_base = null, string $url_path = null): array
 {

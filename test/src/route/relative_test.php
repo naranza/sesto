@@ -13,7 +13,7 @@ class bateo_testcase
 
   public function setup()
   {
-    require_once SESTO_DIR . '/url/relative.php';
+    require_once SESTO_DIR . '/route/relative.php';
   }
 
   public function t_test_root(test $t)

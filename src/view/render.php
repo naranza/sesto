@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-function sesto_view_render(array $views, string $name, array $data = [], bool $strict = true): void
+function sesto_view_render(array $views, string $name, object|array $data = [], bool $strict = true): void
 {
   $has_view = isset($views[$name]);
   if (!$has_view && $strict) {

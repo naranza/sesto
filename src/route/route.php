@@ -6,11 +6,16 @@
 
 declare(strict_types=1);
 
-function sesto_locale_resolve(string $locale): array
+class sesto_route
 {
-  return [
-    'locale' => $locale,
-    'primary_language' => locale_get_primary_language($locale) ?? '',
-    'region' => locale_get_region($locale) ?? ''
-  ];
+
+  public string $id = '';
+  public string $url_base = '';
+  public string $url_path = '';
+  public string $url_relative = '';
+  public string $dirname = '';
+  public string $filename = '';
+  public string $basename = '';
+  public string $extension = '';
+  
 }
