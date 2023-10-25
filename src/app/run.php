@@ -7,7 +7,7 @@
 declare(strict_types=1);
 
 require_once SESTO_DIR . '/app/define.php';
-require_once SESTO_DIR . '/config/read.php';
+require_once SESTO_DIR . '/util/config.php';
 require_once SESTO_DIR . '/util/ini_set_array.php';
 require_once SESTO_DIR . '/util/require_array.php';
 require_once SESTO_DIR . '/util/exit.php';
@@ -68,11 +68,11 @@ function sesto_app_run(string $sys_dir, callable $callback, array $args = [], st
 
     if (null === $error_handler) {
       if ('cli' == php_sapi_name()) {
-        require_once SESTO_DIR . '/app/error_handler_cli.php';
-        $error_handler = 'sesto_app_error_handler_cli';
+        require_once SESTO_DIR . '/app/error_cli.php';
+        $error_handler = 'sesto_app_error_cli';
       } else {
-        require_once SESTO_DIR . '/app/error_handler_web.php';
-        $error_handler = 'sesto_app_error_handler_web';
+        require_once SESTO_DIR . '/app/error_web.php';
+        $error_handler = 'sesto_app_error_web';
       }
     }
     $callback($config, $args);

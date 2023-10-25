@@ -13,7 +13,7 @@ class bateo_testcase
 
   public function setup()
   {
-    require_once SESTO_DIR . '/config/read.php';
+    require_once SESTO_DIR . '/util/config.php';
   }
 
   public function t_test_valid(test $t)
