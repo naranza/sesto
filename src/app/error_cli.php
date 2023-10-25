@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-function sesto_app_error_handler_cli(throwable $throwable, array $args = []): void
+function sesto_app_error_cli(throwable $throwable, array $args = []): void
 {
   $extended_info = is_bool($args['error_extended_info'] ?? false) ?: false;
   echo "\n--- throwable ---\n";
