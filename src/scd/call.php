@@ -6,19 +6,21 @@
 
 declare(strict_types=1);
 
-function sesto_scd_call(array $spc): mixed
+require_once SESTO_DIR . '/scd/scd.php';
+
+function sesto_scd_call(sesto_scd $scd): mixed
 {
-  if (isset($spc['require'])) {
-    if (!is_file($spc['require']) || !is_readable($spc['require'])) {
-      throw new exception($spc['require'] . ' is not readable');
+  if (isset($scd->require)) {
+    if (!is_file($scd->require) || !is_readable($scd->require)) {
+      throw new exception($scd->require . ' is not readable');
     }
-    require_once $spc['require'];
+    require_once $scd->require;
   }
-  if (!isset($spc['callable'])) {
-    throw new exception($spc['callable'] . ' not defined');
-  } elseif (!is_callable($spc['callable'])) {
+  if (!isset($scd->callable)) {
+    throw new exception($scd->callable . ' not defined');
+  } elseif (!is_callable($scd->callable)) {
     throw new exception('Function/method not callable');
   }
 
-  return call_user_func_array($spc['callable'], $spc['args'] ?? []);
+  return call_user_func_array($scd->callable, $scd->args ?? []);
 }
