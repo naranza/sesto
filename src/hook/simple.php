@@ -35,12 +35,12 @@ final class sesto_hook_simple
     return ($name === null) ? $this->hooks : ($this->hooks[$name] ?? []);
   }
 
-  function attach(string $name, callable $callback, int $priority = 50): void
+  public function attach(string $name, callable $callback, int $priority = 50): void
   {
     $this->hooks[$name][$priority][] = $callback;
   }
 
-  function filter(string $name, $value): mixed
+  public function filter(string $name, $value): mixed
   {
     $filtered = $value;
     $calls = $this->hooks[$name] ?? [];
@@ -59,7 +59,7 @@ final class sesto_hook_simple
     return $filtered;
   }
 
-  function function(string $name, ...$args): mixed
+  public function function(string $name, ...$args): mixed
   {
     $result = null;
     $calls = $this->hooks[$name] ?? [];
@@ -73,7 +73,7 @@ final class sesto_hook_simple
     return $result;
   }
 
-  function procedure(string $name, &...$args): void
+  public function procedure(string $name, &...$args): void
   {
     $calls = $this->hooks[$name] ?? [];
     if (!empty($calls)) {
