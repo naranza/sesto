@@ -6,7 +6,12 @@
 
 declare(strict_types=1);
 
-function sesto_array_range($start, $end, $step = 1, string $format_key = null, string $format_value = null)
+function sesto_array_range(
+  $start,
+  $end,
+  $step = 1,
+  string $format_key = null,
+  string $format_value = null): array
 {
   $data = [];
   foreach (range($start, $end, $step) as $value) {

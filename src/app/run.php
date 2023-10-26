@@ -13,10 +13,10 @@ require_once SESTO_DIR . '/util/require_array.php';
 require_once SESTO_DIR . '/util/exit.php';
 require_once SESTO_DIR . '/util/registry.php';
 require_once SESTO_DIR . '/util/resource.php';
-require_once SESTO_DIR . '/scd/record.php';
-require_once SESTO_DIR . '/scd/struct.php';
-require_once SESTO_DIR . '/scd/call.php';
-require_once SESTO_DIR . '/error/handler.php';
+//require_once SESTO_DIR . '/scd/record.php';
+//require_once SESTO_DIR . '/scd/struct.php';
+//require_once SESTO_DIR . '/scd/call.php';
+require_once SESTO_DIR . '/util/error_handler.php';
 
 function sesto_app_run(string $sys_dir, callable $callback, array $args = [], string &$error = ''): int
 {

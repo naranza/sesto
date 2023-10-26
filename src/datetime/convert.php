@@ -8,11 +8,7 @@ declare(strict_types=1);
 
 require_once SESTO_DIR . '/datetime/from_format.php';
 
-function sesto_datetime_convert(
-  string $date,
-  string $from_format,
-  string $to_format,
-  datetimezone $timezone = null): string
+function sesto_datetime_convert(string $date, string $from_format, string $to_format, datetimezone $timezone = null): string
 {
   $result = '';
   if (null === $timezone) {
