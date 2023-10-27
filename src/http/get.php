@@ -6,8 +6,8 @@
 
 declare(strict_types = 1);
 
-function sesto_http_post(): bool
+function sesto_http_get(): bool
 {
-  return 'GET' == $_SERVER['REQUEST_METHOD'];
+  return 'GET' == ($_SERVER['REQUEST_METHOD'] ?? '');
 }
 

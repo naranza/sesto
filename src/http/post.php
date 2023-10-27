@@ -8,6 +8,6 @@ declare(strict_types = 1);
 
 function sesto_http_post(): bool
 {
-  return 'POST' == $_SERVER['REQUEST_METHOD'];
+  return 'POST' == ($_SERVER['REQUEST_METHOD'] ?? '');
 }
 
