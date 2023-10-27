@@ -6,12 +6,12 @@
 
 declare(strict_types=1);
 
-require_once SESTO_DIR . '/route/struct.php';
-require_once SESTO_DIR . '/route/base.php';
-require_once SESTO_DIR . '/route/path.php';
-require_once SESTO_DIR . '/route/relative.php';
+require_once SESTO_DIR . '/route/route.php';
+require_once SESTO_DIR . '/url/base.php';
+require_once SESTO_DIR . '/url/path.php';
+require_once SESTO_DIR . '/url/relative.php';
 
-function sesto_routing_resolve(string $url_base = null, string $url_path = null): sesto_route
+function sesto_route_solve(string $url_base = null, string $url_path = null): sesto_route
 {
   $route = new sesto_route();
   $route->url_base = null === $url_base ? sesto_url_base() : $url_base;
