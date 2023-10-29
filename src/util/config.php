@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-function sesto_config_read(string $path): false|array
+function sesto_config(string $path): false|array
 {
   $path .= 'php' != pathinfo($path, PATHINFO_EXTENSION) ? '.php' : '';
   if (is_file($path) && is_readable($path)) {
