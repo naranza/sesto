@@ -11,12 +11,12 @@ class sesto_struct
 
   public function __get(string $name): mixed
   {
-    throw new exception("($name) __get not allowed on Sesto struct");
+    throw new exception("__get($name) not allowed on Sesto struct");
   }
 
   public function __set($name, $value)
   {
-    throw new exception('__set not allowed on Sesto struct');
+    throw new exception("__set($name) not allowed on Sesto struct");
   }
 
   public function __construct(array $config = [])
