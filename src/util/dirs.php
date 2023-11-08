@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-function sesto_path(string $name = null, string $dir = null): array|string
+function sesto_dirs(string $name = null, string $dir = null): array|string
 {
   static $dirs = [];
 
