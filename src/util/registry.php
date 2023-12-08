@@ -10,14 +10,13 @@ function sesto_registry(string $name = null, $value = null): mixed
 {
   /* init */
   static $cache = [];
-  $num_args = func_num_args();
-  if (0 === $num_args) {
+  if ($name === null) {
     /* return cache */
     return $cache;
-  } else if (1 === $num_args) {
+  } else if (is_string($name) && $value === null) {
     /* get */
     return $cache[$name] ?? null;
-  } elseif (2 === $num_args) {
+  } else {
     if (null === $value) {
       /* delete */
       unset($cache[$name]);
@@ -25,9 +24,6 @@ function sesto_registry(string $name = null, $value = null): mixed
       /* set */
       $cache[$name] = $value;
     }
-    return null;
-  } else {
-    /* do nothing */
     return null;
   }
 }
