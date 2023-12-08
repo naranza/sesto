@@ -13,25 +13,31 @@ require_once SESTO_DIR . '/util/require_array.php';
 require_once SESTO_DIR . '/util/exit.php';
 require_once SESTO_DIR . '/util/registry.php';
 require_once SESTO_DIR . '/util/resource.php';
-//require_once SESTO_DIR . '/scd/record.php';
-//require_once SESTO_DIR . '/scd/struct.php';
-//require_once SESTO_DIR . '/scd/call.php';
 require_once SESTO_DIR . '/util/error_handler.php';
+require_once SESTO_DIR . '/util/registry.php';
 
-function sesto_app_run(string $sys_dir, callable $callback, array $args = [], string &$error = ''): int
+function sesto_app_run(
+  string $sys_dir,
+  string|array $engine,
+  array $args = [],
+  string $app_name = '',
+  bool $as_module = false,
+  string &$error = ''
+): int
 {
 
   $exit_code = 0;
   $error = '';
   $error_handler = null;
   try {
-    $define_error = sesto_app_define($sys_dir);
+    /* define constants */
+    $define_error = sesto_app_define($sys_dir, $app_name, $as_module);
     if ('' !== $define_error) {
       throw new exception($define_error);
     }
 
     /* load and parse app.php config */
-    $config = sesto_config_read($sys_dir . '/conf/config.php');
+    $config = sesto_config(SESTO_APP_CONF_DIR . '/app.php');
     if (is_array($config)) {
       /* parse ini_set */
       sesto_ini_set_array($config['sesto_php_ini_set'] ?? []);
@@ -40,7 +46,7 @@ function sesto_app_run(string $sys_dir, callable $callback, array $args = [], st
       sesto_require_array($config['sesto_require'] ?? []);
 
       /* parse env */
-      foreach ($config['env'] ?? [] as $name => $value) {
+      foreach ($config['registry'] ?? [] as $name => $value) {
         sesto_registry($name, $value);
       }
 
@@ -75,7 +81,11 @@ function sesto_app_run(string $sys_dir, callable $callback, array $args = [], st
         $error_handler = 'sesto_app_error_web';
       }
     }
-    $callback($config, $args);
+    if (!is_callable($engine)) {
+      throw new exception('Engine not callable');
+    } else {
+      $engine($config, $args);
+    }
   } catch (sesto_exit $throwable) {
     /* do nothing */
   } catch (throwable $throwable) {
