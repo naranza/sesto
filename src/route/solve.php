@@ -17,7 +17,9 @@ function sesto_route_solve(string $url_base = null, string $url_path = null): se
   $route->url_base = null === $url_base ? sesto_url_base() : $url_base;
   $route->url_path = null === $url_path ? sesto_url_path() : $url_path;
   $route->url_relative = sesto_url_relative($route->url_path, $route->url_base);
-  if ('/' == $route->url_relative[mb_strlen($route->url_relative) - 1]) {
+  $len = mb_strlen($route->url_relative);
+  $char = $len > 0 ? $route->url_relative[$len - 1] : '';
+  if ('/' == $char) {
     $pinfo = pathinfo($route->url_relative . 'index');
   } else {
     $pinfo = pathinfo($route->url_relative);
