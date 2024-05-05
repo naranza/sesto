@@ -16,6 +16,7 @@ function sesto_app_define(string $sys_dir, string $app_name = '', bool $as_modul
     define('SESTO_SYS_DIR', $sys_dir);
     define('SESTO_SYS_APP_DIR', $sys_dir . '/app');
     define('SESTO_SYS_BIN_DIR', $sys_dir . '/bin');
+    define('SESTO_SYS_CLI_DIR', $sys_dir . '/cli');
     define('SESTO_SYS_CONF_DIR', $sys_dir . '/conf');
     define('SESTO_SYS_RES_DIR', $sys_dir . '/res');
     define('SESTO_SYS_LIB_DIR', $sys_dir . '/lib');
@@ -40,6 +41,7 @@ function sesto_app_define(string $sys_dir, string $app_name = '', bool $as_modul
     } else {
       define('SESTO_APP_DIR', $app_dir);
       define('SESTO_APP_BIN_DIR', $app_dir . '/bin');
+      define('SESTO_APP_CLI_DIR', $app_dir . '/cli');
       define('SESTO_APP_CONF_DIR', $app_dir . '/conf');
       define('SESTO_APP_RES_DIR', $app_dir . '/res');
       define('SESTO_APP_LIB_DIR', $app_dir . '/lib');
