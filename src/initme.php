@@ -7,5 +7,5 @@
 declare(strict_types=1);
 
 const SESTO_DIR = __DIR__;
-const SESTO_VERSION = '2023.3';
+const SESTO_VERSION = '2024.2';
 const SESTO_CODENAME = 'White Ash';
