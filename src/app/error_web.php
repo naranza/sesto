@@ -10,7 +10,7 @@ require_once SESTO_DIR . '/http/status_codes.php';
 
 function sesto_app_error_web(throwable $throwable, array $args = []): void
 {
-  $extended_info = is_bool($args['error_extended_info'] ?? null) ?: false;
+  $extended_info = is_bool($args['error_extended_info'] ?? false) ?: false;
   $code = isset(sesto_http_status_codes()[$throwable->getcode()]) ? $throwable->getcode() : 500;
   $message = sesto_http_status_codes()[$code];
   if (!headers_sent()) {
