@@ -6,14 +6,15 @@
 
 declare(strict_types=1);
 
-function sesto_sql_where(array $where): string
+require_once SESTO_DIR . '/sql/where.php';
+
+function sesto_sql_map(array $map, array $record)
 {
-  if (empty($where)) {
-    return '';
+  $mapped = $record;
+  foreach (array_keys($record) as $field) {
+     if (isset($map[$field])) {
+      $mapped[$field] = ':' . $field;
+     }
   }
-  $terms = [];
-  foreach ($where as $term) {
-    $terms[] = '(' . $term . ')';
-  }
-  return implode(PHP_EOL . '  and ', $terms);
+  return $mapped;
 }

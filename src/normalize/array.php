@@ -6,14 +6,13 @@
 
 declare(strict_types=1);
 
-function sesto_sql_where(array $where): string
+function sesto_normalize_array(array $source, array $data): array
 {
-  if (empty($where)) {
-    return '';
+  $normalized = $source;
+  foreach ($source as $key => $value) {
+    if (isset($data[$key])) {
+      $normalized[$key] = $data[$key];
+    }
   }
-  $terms = [];
-  foreach ($where as $term) {
-    $terms[] = '(' . $term . ')';
-  }
-  return implode(PHP_EOL . '  and ', $terms);
+  return $normalized;
 }

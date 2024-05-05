@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-function sesto_sql_where(array $where): string
+function sesto_sql_where_map(array $where): string
 {
   if (empty($where)) {
     return '';
