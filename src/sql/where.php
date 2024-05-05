@@ -15,5 +15,5 @@ function sesto_sql_where(array $where): string
   foreach ($where as $term) {
     $terms[] = '(' . $term . ')';
   }
-  return implode(PHP_EOL . '  and ', $terms);
+  return implode(' and ', $terms);
 }

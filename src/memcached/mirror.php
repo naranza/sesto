@@ -10,9 +10,9 @@ require_once SESTO_DIR . '/memcached/write.php';
 class sesto_memcached_mirror
 {
 
-  private $master;
-
-  private $mirror = [];
+  private Memcached $master;
+  private int $num_mirrors = 0;
+  private array $mirror = [];
 
   public function __construct(array $master, array $mirrors = [], array $options = [])
   {
@@ -35,6 +35,7 @@ class sesto_memcached_mirror
         /* Setting Options for mirrors */
         $this->mirror[$key]->setOption($key1, $value1);
       }
+      $this->num_mirrors++;
     }
   }
 
@@ -56,8 +57,18 @@ class sesto_memcached_mirror
   {
     $result1 = sesto_memcached_write($this->master, $key, $data, $ttl);
 
-    foreach ($this->mirror as $mirror) {
-      $result2 = sesto_memcached_write($mirror, $key, $data, $ttl);
+    $num_failures = 0;
+    $result2 = true;
+    if ($this->num_mirrors > 0) {
+      foreach ($this->mirror as $mirror) {
+        $result = sesto_memcached_write($mirror, $key, $data, $ttl);
+        if ($result === false) {
+          $num_failures++;
+        }
+      }
+      if ($num_failures === $this->num_mirrors) {
+        $result2 = false;
+      }
     }
 
     return $result1 || $result2;
@@ -66,10 +77,20 @@ class sesto_memcached_mirror
   public function delete($key, $time = 0): bool
   {
     $result1 = $this->master->delete($key, $time);
-    foreach ($this->mirror as $mirror) {
-      $result2 = $mirror->delete($key, $time);
+
+    $num_failures = 0;
+    $result2 = true;
+    if ($this->num_mirrors > 0) {
+      foreach ($this->mirror as $mirror) {
+        $result = $mirror->delete($key, $time);
+        if ($result === false) {
+          $num_failures++;
+        }
+      }
+      if ($num_failures === $this->num_mirrors) {
+        $result2 = false;
+      }
     }
     return $result1 || $result2;
   }
-
 }
