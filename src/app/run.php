@@ -95,7 +95,7 @@ function sesto_app_run(
       ob_end_clean();
     }
     if (null !== $error_handler) {
-      call_user_func_array($error_handler, [$throwable, $args]);
+      call_user_func_array($error_handler, [$throwable, $config, $args]);
     }
     $exit_code = 1;
     $error = $throwable->getmessage();
