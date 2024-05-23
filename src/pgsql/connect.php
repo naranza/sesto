@@ -17,18 +17,21 @@ function sesto_pgsql_connect(
   string &$error = ''): pgsql\connection|false
 {
   $error = '';
-  $port = $options['port'] ?? '';
   /* generate conncetion string */
   $string = 'host=' . $hostname ?? '';
-  if ('' != $port) {
-    $string .= ' port=' . $port;
+  if (is_string(($options['port'] ?? null))) {
+    $string .= ' port=' . $options['port'];
   }
   $string .= ' dbname=' . $database ?? '';
   $string .= ' user=' . $username ?? '';
   $string .= ' password=' . $password ?? '';
+  if (is_string(($options['sslmode'] ?? null))) {
+    $string .= ' sslmode=' . $options['sslmode'];
+  }
   if (is_string(($options['client_encoding'] ?? null))) {
     $string .= " options='--client_encoding={$options['client_encoding']}'";
   }
+
   /* connect */
   try {
     set_error_handler('sesto_error_handler');
