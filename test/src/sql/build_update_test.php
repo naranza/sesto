@@ -21,9 +21,20 @@ class bateo_testcase
     $struct = new sesto_sql_update();
     $struct->table = 'mytable';
     $struct->record['id'] = 1;
-    $struct->record['name'] = "'sesto'";
-    $t->wie = "update mytable set id = 1, name = 'sesto'";
+    $struct->record['name'] = ["CONCAT ('Naranza', ' ', 'Sesto')"];
+    $t->wie = "update mytable set id = :id, name = CONCAT ('Naranza', ' ', 'Sesto')";
     $t->wig = sesto_sql_build_update($struct);
+    $t->pass_if($t->wie === $t->wig);
+  }
+
+  public function t_not_prepared(test $t)
+  {
+    $struct = new sesto_sql_update();
+    $struct->table = 'mytable';
+    $struct->record['id'] = 1;
+    $struct->record['name'] = "CONCAT ('Naranza', ' ', 'Sesto')";
+    $t->wie = "update mytable set id = 1, name = CONCAT ('Naranza', ' ', 'Sesto')";
+    $t->wig = sesto_sql_build_update($struct, false);
     $t->pass_if($t->wie === $t->wig);
   }
 
@@ -33,9 +44,9 @@ class bateo_testcase
     $struct->table = 'mytable';
     $struct->record['id'] = 1;
     $struct->record['name'] = "'sesto'";
-    $struct->where[] = 'id = 1';
-    $struct->where[] = "name = 'pippo'";
-    $t->wie = "update mytable set id = 1, name = 'sesto' where (id = 1) and (name = 'pippo')";
+    $struct->where['a'] = ['id =', 1];
+    $struct->where['b'] = ['name =', 'pippo'];
+    $t->wie = "update mytable set id = :id, name = :name where (id = :a) and (name = :b)";
     $t->wig = sesto_sql_build_update($struct);
     $t->pass_if($t->wie === $t->wig);
   }
@@ -44,13 +55,13 @@ class bateo_testcase
   {
     $struct = new sesto_sql_update();
     $struct->table = 'mytable';
-    $struct->record['temp_lo'] = 'temp_lo+1';
-    $struct->record['temp_hi'] = "temp_lo+15";
-    $struct->where[] = "city = 'San Francisco'";
-    $struct->where[] = "date = '2003-07-03'";
+    $struct->record['temp_lo'] = ["temp_lo+1"];
+    $struct->record['temp_hi'] = ["temp_lo+15"];
+    $struct->where['city'] = ['city =', 'San Francisco'];
+    $struct->where['date'] = ['date =', '2003-07-03'];
     $struct->returning[] = "temp_lo";
     $struct->returning[] = "temp_hi";
-    $t->wie = "update mytable set temp_lo = temp_lo+1, temp_hi = temp_lo+15 where (city = 'San Francisco') and (date = '2003-07-03') returning temp_lo, temp_hi";
+    $t->wie = "update mytable set temp_lo = temp_lo+1, temp_hi = temp_lo+15 where (city = :city) and (date = :date) returning temp_lo, temp_hi";
     $t->wig = sesto_sql_build_update($struct);
     $t->pass_if($t->wie === $t->wig);
   }

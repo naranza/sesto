@@ -27,8 +27,8 @@ class bateo_testcase
     $struct->join[] = "join1";
     $struct->join[] = "join2";
 
-    $struct->where[] = "where1";
-    $struct->where[] = "where2";
+    $struct->where['w1'] = ['where1 =', 1];
+    $struct->where['w2'] = ['where2'];
 
     $struct->group[] = "group1";
     $struct->group[] = "group2";
@@ -39,7 +39,7 @@ class bateo_testcase
     $struct->limit = 10;
     $struct->offset = 20;
 
-    $t->wie = "select count(1) as num_rows from mytable join1 join2 where (where1) and (where2) group by group1, group2";
+    $t->wie = "select count(1) as num_rows from mytable join1 join2 where (where1 = :w1) and (where2) group by group1, group2";
     $t->wig = sesto_sql_build_count($struct);
     $t->pass_if($t->wie === $t->wig);
   }
