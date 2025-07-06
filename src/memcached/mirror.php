@@ -1,8 +1,8 @@
 <?php
 
-/* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
- * ========================================================================== */
+// Naranza Sesto - https://naranza.org
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Andrea Davanzo and contributors
 
 require_once SESTO_DIR . '/memcached/read.php';
 require_once SESTO_DIR . '/memcached/write.php';

@@ -1,10 +1,9 @@
 <?php
 
-/* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
- * ========================================================================== */
-
-/* Note this function has been inspired from Zend Framework 1 (Zend_Filter_StringTrim) */
+// Naranza Sesto - https://naranza.org
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Andrea Davanzo and contributors
+// Note this function has been inspired from Zend Framework 1 (Zend_Filter_StringTrim)
 
 declare(strict_types=1);
 

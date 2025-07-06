@@ -1,10 +1,9 @@
 <?php
 
-/* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
- * ========================================================================== */
-
-/* Note this function has been inspired from spaceless.php https://gist.github.com/diasfs/0c7759b1bb40323d2d155b310637a871 */
+// Naranza Sesto - https://naranza.org
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Andrea Davanzo and contributors
+// Note this function has been inspired from spaceless.php https://gist.github.com/diasfs/0c7759b1bb40323d2d155b310637a871
 
 declare(strict_types=1);
 
