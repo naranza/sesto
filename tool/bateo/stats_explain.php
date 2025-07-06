@@ -1,9 +1,10 @@
 <?php
+
 /* =============================================================================
- * Naranza Bateo, Copyright (c) Andrea Davanzo, License GNU GPL v3.0, bateo.dev
+ * Naranza Bateo - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 function bateo_process_stats_explain(array $stats, string $bootstrap_error, int $shutdown_errors): array
 {
@@ -21,10 +22,10 @@ function bateo_process_stats_explain(array $stats, string $bootstrap_error, int 
           $reason = 'No tests found';
         }
       } else {
-        $reason = 'No testcases found';
+        $reason = 'No test cases found';
       }
     } else {
-      $reason = 'Failed testcases found';
+      $reason = 'Failed test cases found';
     }
   } elseif ('' !== $bootstrap_error) {
     $reason = 'Bootstrap error found';

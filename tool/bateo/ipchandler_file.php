@@ -1,9 +1,10 @@
 <?php
+
 /* =============================================================================
- * Naranza Bateo, Copyright (c) Andrea Davanzo, License GNU GPL v3.0, bateo.dev
+ * Naranza Bateo - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once BATEO_DIR . '/ipchandler_interface.php';
 
@@ -27,5 +28,4 @@ class bateo_ipchandler_file implements bateo_ipchandler_interface
     $filename = sys_get_temp_dir() . '/' . $id . '.ipcmsg';
     return unlink($filename);
   }
-
 }

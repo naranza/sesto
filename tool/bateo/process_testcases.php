@@ -1,9 +1,10 @@
 <?php
+
 /* =============================================================================
- * Naranza Bateo, Copyright (c) Andrea Davanzo, License GNU GPL v3.0, bateo.dev
+ * Naranza Bateo - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once BATEO_DIR . '/stats_process.php';
 require_once BATEO_DIR . '/stats_process_update.php';
@@ -52,7 +53,7 @@ function bateo_process_testcases(bateo_datalist_interface $datalist, bateo_ipcha
         $testcase_result = [];
       }
       /* child process completed */
-      $ipc_handler->save($child_pid, json_encode($testcase_result));
+      $ipc_handler->save($child_pid, json_encode($testcase_result, JSON_INVALID_UTF8_SUBSTITUTE));
       exit(0);
     }
   }
@@ -76,7 +77,6 @@ function bateo_process_testcases(bateo_datalist_interface $datalist, bateo_ipcha
   }
   return $result;
 }
-
 
 function bateo_read_ipc(bateo_ipchandler_interface $ipc_handler, int $pid): array
 {

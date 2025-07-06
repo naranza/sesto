@@ -1,9 +1,10 @@
 <?php
+
 /* =============================================================================
- * Naranza Bateo, Copyright (c) Andrea Davanzo, License GNU GPL v3.0, bateo.dev
+ * Naranza Bateo - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once BATEO_DIR . '/testcase_init.php';
 require_once BATEO_DIR . '/test.php';
@@ -58,7 +59,15 @@ function bateo_testcase_run(string $path): array
             if (!$test->wie instanceof throwable) {
               $test->error(bateo_print_th($throwable, true));
             } else {
-              $test->pass('throwable expected');
+              if ($test->wig instanceof throwable) {
+                $test->pass_if(
+                  get_class($test->wie) == get_class($test->wig)
+                  && $test->wie->getmessage() === $test->wig->getmessage()
+                  && $test->wie->getcode() === $test->wig->getcode()
+                  );
+              } else {
+                $test->pass('throwable expected');
+              }
             }
             $test_result = $test->result();
           }

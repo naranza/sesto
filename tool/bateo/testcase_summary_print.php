@@ -1,9 +1,10 @@
 <?php
+
 /* =============================================================================
- * Naranza Bateo, Copyright (c) Andrea Davanzo, License GNU GPL v3.0, bateo.dev
+ * Naranza Bateo - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once BATEO_DIR . '/code_to_string.php';
 
@@ -14,8 +15,8 @@ function bateo_testcase_summary_print(array $testcase_result)
   if (empty($num_issues) && empty($num_errors)) {
     return;
   }
-  echo "== Testcase summary\n";
-  echo "Testcase: {$testcase_result['path']}\n";
+  echo "== Test case summary\n";
+  echo "Test case: {$testcase_result['path']}\n";
   if (0 == $num_issues) {
     // echo "No issues found\n";
   } else {

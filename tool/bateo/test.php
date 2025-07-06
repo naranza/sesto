@@ -1,9 +1,10 @@
 <?php
+
 /* =============================================================================
- * Naranza Bateo, Copyright (c) Andrea Davanzo, License GNU GPL v3.0, bateo.dev
+ * Naranza Bateo - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
  * ========================================================================== */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once BATEO_DIR . '/test_result.php';
 
@@ -11,8 +12,8 @@ final class bateo_test
 {
 
   private $result;
-  public $wie;
-  public $wig;
+  public mixed $wie = null;
+  public mixed $wig = null;
 
   public function __construct(string $testname)
   {
@@ -24,9 +25,23 @@ final class bateo_test
     $this->result['code'] = $code;
     if (func_num_args() > 2) {
       $this->result['message'] = call_user_func_array('sprintf', array_slice(func_get_args(), 1));
-    } else  {
+    } else {
       $this->result['message'] = $message;
     }
+  }
+
+  private function set_args(string|null $message, array $func_args)
+  {
+    if (null === $message) {
+      if ($this->wie !== null && $this->wig !== null) {
+        $args = [bateo_wix($this->wie, $this->wig)];
+      } else {
+        $args = [''];
+      }
+    } else {
+      $args = array_slice($func_args, 1);
+    }
+    return $args;
   }
 
   public function result(): array
@@ -61,34 +76,21 @@ final class bateo_test
 
   public function pass_if(bool $condition, string $message = null)
   {
-    if (null === $message) {
-      $message =  bateo_wix($this->wie, $this->wig);
-      $args = [$message];
-    } else {
-      $args = array_slice(func_get_args(), 1);
-    }
     if ($condition) {
-      $args = array_merge([BATEO_TEST_PASS], $args);
+      $args = array_merge([BATEO_TEST_PASS], $this->set_args($message, func_get_args()));
     } else {
-      $args = array_merge([BATEO_TEST_FAIL], $args);
+      $args = array_merge([BATEO_TEST_FAIL], $this->set_args($message, func_get_args()));
     }
     $this->set_result(...$args);
   }
 
   public function fail_if(bool $condition, string $message = null)
   {
-    if (null === $message) {
-      $message =  bateo_wix($this->wie, $this->wig);
-      $args = [$message];
-    } else {
-      $args = array_slice(func_get_args(), 1);
-    }
     if ($condition) {
-      $args = array_merge([BATEO_TEST_FAIL], $args);
+      $args = array_merge([BATEO_TEST_FAIL], $this->set_args($message, func_get_args()));
     } else {
-      $args = array_merge([BATEO_TEST_PASS], $args);
+      $args = array_merge([BATEO_TEST_PASS], $this->set_args($message, func_get_args()));
     }
     $this->set_result(...$args);
   }
-
 }
