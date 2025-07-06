@@ -1,14 +1,16 @@
 <?php
 
-/* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
- * ========================================================================== */
+// Naranza Sesto - https://naranza.org
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Andrea Davanzo and contributors
 
 declare(strict_types=1);
 
+require_once SESTO_DIR . '/scd/call.php';
+
 final class sesto_hook_simple
 {
-
+  protected array $store;
   protected array $hooks;
   protected static $instance;
 
@@ -35,9 +37,26 @@ final class sesto_hook_simple
     return ($name === null) ? $this->hooks : ($this->hooks[$name] ?? []);
   }
 
-  public function attach(string $name, callable $callback, int $priority = 50): void
+  public function has(string $name): bool
   {
-    $this->hooks[$name][$priority][] = $callback;
+    return isset($this->hooks[$name]);
+  }
+
+  public function list(string $name): array
+  {
+    $list = [];
+    foreach ($this->get($name) as $block) {
+        foreach ($block as $callback) {
+          $list[] = $callback;
+        }
+    }
+    return $list;
+  }
+
+  public function attach(string $name, sesto_scd $scd, int $priority = 50): void
+  {
+    $this->hooks[$name][$priority][] = $scd;
+    ksort( $this->hooks[$name], SORT_NUMERIC);
   }
 
   public function filter(string $name, $value): mixed
@@ -45,14 +64,13 @@ final class sesto_hook_simple
     $filtered = $value;
     $calls = $this->hooks[$name] ?? [];
     if (!empty($calls)) {
-      ksort($calls, SORT_NUMERIC);
       $args = [];
       if (func_num_args() > 3) {
         $args = array_slice(func_get_args(), 2);
       }
       foreach ($calls as $block) {
-        foreach ($block as $callback) {
-          $filtered = $callback($filtered, ...$args);
+        foreach ($block as $scd) {
+          $filtered = sesto_scd_call($scd, $filtered, $args);
         }
       }
     }
@@ -63,27 +81,21 @@ final class sesto_hook_simple
   {
     $result = null;
     $calls = $this->hooks[$name] ?? [];
-    ksort($calls, SORT_NUMERIC);
     foreach ($calls as $block) {
-      foreach ($block as $callback) {
-        $result = $callback(...$args);
+      foreach ($block as $scd) {
+        sesto_scd_call($scd, ...$args);
       }
     }
-//    sesto_d(sprintf("%s -> %s", $name, ($callback ?? 'null')), __FUNCTION__);
     return $result;
   }
 
   public function procedure(string $name, &...$args): void
   {
     $calls = $this->hooks[$name] ?? [];
-    if (!empty($calls)) {
-      ksort($calls, SORT_NUMERIC);
-      foreach ($calls as $block) {
-        foreach ($block as $callback) {
-          $callback(...$args);
-        }
+    foreach ($calls as $block) {
+      foreach ($block as $scd) {
+        sesto_scd_call($scd, ...$args);
       }
     }
-//    sesto_d(sprintf("%s -> %s", $name, ($callback ?? 'null')), __FUNCTION__);
   }
 }
