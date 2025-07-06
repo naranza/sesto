@@ -1,0 +1,58 @@
+<?php
+
+// Naranza Sesto - https://naranza.org
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Andrea Davanzo and contributors
+
+declare(strict_types=1);
+
+use bateo_test as test;
+
+class bateo_testcase
+{
+
+  public function setup()
+  {
+    require_once SESTO_DIR . '/sql/build_select.php';
+  }
+
+  public function t_data(test $t)
+  {
+    $struct = new sesto_sql_select();
+    $struct->from = 'mytable';
+    $struct->cols[] = "id as col_id";
+    $struct->cols[] = "name as col_name";
+    $t->wie = "select id as col_id, name as col_name from mytable";
+    $t->wig = sesto_sql_build_select($struct);
+    $t->pass_if($t->wie === $t->wig);
+  }
+
+  public function t_complex(test $t)
+  {
+    $struct = new sesto_sql_select();
+    $struct->from = 'mytable';
+
+    $struct->cols[] = "col1";
+    $struct->cols[] = "col2";
+
+    $struct->join[] = "join1";
+    $struct->join[] = "join2";
+
+    $struct->where[] = "where1";
+    $struct->where[] = "where2";
+
+    $struct->group[] = "group1";
+    $struct->group[] = "group2";
+
+    $struct->order[] = "order1";
+    $struct->order[] = "order1";
+
+    $struct->limit = 10;
+    $struct->offset = 20;
+
+    $t->wie = "select col1, col2 from mytable join1 join2 where (where1) and (where2) group by group1, group2 order by order1, order1 limit 10 offset 20";
+    $t->wig = sesto_sql_build_select($struct);
+    $t->pass_if($t->wie === $t->wig);
+  }
+
+}

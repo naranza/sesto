@@ -18,40 +18,40 @@ class bateo_testcase
 
   public function t_data(test $t)
   {
-    $select = new sesto_sql_update();
-    $select->table = 'mytable';
-    $select->record['id'] = 1;
-    $select->record['name'] = "'sesto'";
+    $struct = new sesto_sql_update();
+    $struct->table = 'mytable';
+    $struct->record['id'] = 1;
+    $struct->record['name'] = "'sesto'";
     $t->wie = "update mytable set id = 1, name = 'sesto'";
-    $t->wig = sesto_sql_build_update($select);
+    $t->wig = sesto_sql_build_update($struct);
     $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_where(test $t)
   {
-    $select = new sesto_sql_update();
-    $select->table = 'mytable';
-    $select->record['id'] = 1;
-    $select->record['name'] = "'sesto'";
-    $select->where[] = 'id = 1';
-    $select->where[] = "name = 'pippo'";
+    $struct = new sesto_sql_update();
+    $struct->table = 'mytable';
+    $struct->record['id'] = 1;
+    $struct->record['name'] = "'sesto'";
+    $struct->where[] = 'id = 1';
+    $struct->where[] = "name = 'pippo'";
     $t->wie = "update mytable set id = 1, name = 'sesto' where (id = 1) and (name = 'pippo')";
-    $t->wig = sesto_sql_build_update($select);
+    $t->wig = sesto_sql_build_update($struct);
     $t->pass_if($t->wie === $t->wig);
   }
 
   public function t_returning(test $t)
   {
-    $select = new sesto_sql_update();
-    $select->table = 'mytable';
-    $select->record['temp_lo'] = 'temp_lo+1';
-    $select->record['temp_hi'] = "temp_lo+15";
-    $select->where[] = "city = 'San Francisco'";
-    $select->where[] = "date = '2003-07-03'";
-    $select->returning[] = "temp_lo";
-    $select->returning[] = "temp_hi";
+    $struct = new sesto_sql_update();
+    $struct->table = 'mytable';
+    $struct->record['temp_lo'] = 'temp_lo+1';
+    $struct->record['temp_hi'] = "temp_lo+15";
+    $struct->where[] = "city = 'San Francisco'";
+    $struct->where[] = "date = '2003-07-03'";
+    $struct->returning[] = "temp_lo";
+    $struct->returning[] = "temp_hi";
     $t->wie = "update mytable set temp_lo = temp_lo+1, temp_hi = temp_lo+15 where (city = 'San Francisco') and (date = '2003-07-03') returning temp_lo, temp_hi";
-    $t->wig = sesto_sql_build_update($select);
+    $t->wig = sesto_sql_build_update($struct);
     $t->pass_if($t->wie === $t->wig);
   }
 
