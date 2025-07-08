@@ -7,7 +7,7 @@
 declare(strict_types=1);
 
 require_once SESTO_DIR . '/app/define.php';
-require_once SESTO_DIR . '/util/config.php';
+require_once SESTO_DIR . '/config/php.php';
 require_once SESTO_DIR . '/util/ini_set_array.php';
 require_once SESTO_DIR . '/util/require_array.php';
 require_once SESTO_DIR . '/util/exit.php';
@@ -37,7 +37,7 @@ function sesto_app_run(
     }
 
     /* load and parse app.php config */
-    $config = sesto_config(SESTO_APP_CONF_DIR . '/app.php');
+    $config = sesto_config_php(SESTO_APP_CONF_DIR . '/app.php');
     if (is_array($config)) {
       /* parse ini_set */
       sesto_ini_set_array($config['sesto_php_ini_set'] ?? []);
