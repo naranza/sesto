@@ -1,23 +1,20 @@
 <?php
 
-/* =============================================================================
- * Naranza Sesto - Copyright (c) Andrea Davanzo - License MPL v2.0 - naranza.org
- * ========================================================================== */
+// Naranza Sesto - https://naranza.org
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Andrea Davanzo and contributors
 
 declare(strict_types=1);
 
-class sesto_scd
+class sesto_scd {
 
-{
+  public array|string|object $callable;
+  public array $args = [];
+  public string $require = '';
 
-  public readonly array|string|object $callable;
-  public readonly string $require;
-  public readonly array $args;
-
-  function __construct(array|string|object $callable, string $require = '', array $args = [])
-  {
+  function __construct(array|string|object $callable, array $args = [], string $require = '') {
     $this->callable = $callable;
-    $this->require = $require;
     $this->args = $args;
+    $this->require = $require;
   }
 }
